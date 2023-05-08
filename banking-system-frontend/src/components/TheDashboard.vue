@@ -3,8 +3,11 @@
     <h1>The Dashboard</h1>
     <div class="actions">
       <router-link to="/create-account" class="action">Create Account</router-link>
-      <router-link :to="userType === 'customer' ? `/delete-account/${username}` : '/delete-account'" class="action">Delete
-        Account</router-link>
+      <router-link
+        :to="userType === 'customer' ? `/delete-account/${username}` : '/delete-account'"
+        class="action"
+        >Delete Account</router-link
+      >
       <router-link to="/account-balance" class="action">Account Balance</router-link>
       <router-link to="/transfer-funds" class="action">Transfer Funds</router-link>
     </div>
@@ -12,16 +15,16 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 
-const store = useStore();
-const userType = store.state.userType;
-const username = store.state.username;
+const store = useStore()
+const userType = store.state.userType
+const username = store.state.username
 
 onMounted(() => {
-  store.dispatch('getUserType');
-});
+  store.dispatch('getUserType')
+})
 </script>
 
 <style scoped>
@@ -32,7 +35,6 @@ onMounted(() => {
   padding: 20px;
   box-sizing: border-box;
 }
-
 
 .actions {
   display: flex;
