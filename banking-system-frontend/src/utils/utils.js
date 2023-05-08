@@ -6,8 +6,8 @@ export function generateUUID() {
 }
 
 export function generateClientId() {
-    const uuid = generateUUID()
-    const userAgent = navigator.userAgent
+  const uuid = generateUUID()
+  const userAgent = navigator.userAgent
   return `${uuid}_${userAgent}`
 }
 
