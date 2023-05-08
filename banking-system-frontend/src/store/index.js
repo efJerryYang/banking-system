@@ -67,6 +67,21 @@ export default createStore({
         commit('setUserType', '')
       }
       return data
+    },
+    // TODO: not compatible with backend
+    async getUserType({ commit }) {
+      const response = await fetch('/api/getUserType', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log('getUserType', data.message)
+      if (data.status === 'success') {
+        commit('setUserType', data.userType)
+      }
+      return data
     }
   },
   modules: {}
