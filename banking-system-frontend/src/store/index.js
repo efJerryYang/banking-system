@@ -51,9 +51,9 @@ export default createStore({
       const response = await fetch('/api/logout', {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${sessionId}`, // TODO: not compatible with backend
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ sessionId })
+        }
       })
       const data = await response.json()
 
@@ -65,6 +65,21 @@ export default createStore({
         commit('setAccountId', '')
         commit('setUsername', '')
         commit('setUserType', '')
+      }
+      return data
+    },
+    // TODO: not compatible with backend
+    async getUserType({ commit }) {
+      const response = await fetch('/api/getUserType', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log('getUserType', data.message)
+      if (data.status === 'success') {
+        commit('setUserType', data.userType)
       }
       return data
     }

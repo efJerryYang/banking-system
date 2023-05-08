@@ -46,11 +46,6 @@ const submitForm = async () => {
   box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .form-group {
   margin-bottom: 10px;
 }
