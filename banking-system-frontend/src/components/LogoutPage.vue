@@ -26,11 +26,6 @@ const logout = () => {
   box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .btn {
   display: inline-block;
   margin-bottom: 0;
