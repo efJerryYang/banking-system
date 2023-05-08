@@ -4,6 +4,7 @@ export default createStore({
   state: {
     loggedIn: false,
     sessionId: '',
+    accountId: '',
     username: '',
     userType: ''
   },
@@ -14,6 +15,9 @@ export default createStore({
     setSessionId(state, sessionId) {
       state.sessionId = sessionId
     },
+    setAccountId(state, accountId) {
+      state.accountId = accountId
+    },
     setUsername(state, username) {
       state.username = username
     },
@@ -21,6 +25,49 @@ export default createStore({
       state.userType = userType
     }
   },
-  actions: {},
+  actions: {
+    async login({ commit }, { username, password, clientId }) {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password, clientId })
+      })
+      const data = await response.json()
+
+      console.log('login', data.message)
+
+      if (data.status === 'success') {
+        commit('setLoggedIn', true)
+        commit('setSessionId', data.sessionId)
+        commit('setAccountId', data.accountId)
+        commit('setUsername', username)
+        commit('setUserType', data.userType) // TODO: not compatible with backend
+      }
+      return data
+    },
+    async logout({ commit }, { sessionId }) {
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ sessionId })
+      })
+      const data = await response.json()
+
+      console.log('logout', data.message)
+
+      if (data.status === 'success') {
+        commit('setLoggedIn', false)
+        commit('setSessionId', '')
+        commit('setAccountId', '')
+        commit('setUsername', '')
+        commit('setUserType', '')
+      }
+      return data
+    }
+  },
   modules: {}
 })
