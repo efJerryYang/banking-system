@@ -51,9 +51,9 @@ export default createStore({
       const response = await fetch('/api/logout', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${sessionId}`, // TODO: not compatible with backend
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ sessionId })
       })
       const data = await response.json()
 
