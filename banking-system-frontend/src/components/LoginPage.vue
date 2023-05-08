@@ -17,13 +17,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const username = ref('');
 const password = ref('');
 
-const submitForm = () => {
-  // TODO
-  // Submit form to server
+const submitForm = async () => {
+  await store.dispatch('login', { username: username.value, password: password.value });
   console.log('Username:', username.value);
   console.log('Password:', password.value);
 };

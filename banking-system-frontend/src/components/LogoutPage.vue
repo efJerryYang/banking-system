@@ -6,9 +6,13 @@
 </template>
 
 <script setup>
+import { useStore } from 'vuex';
+
+const store = useStore();
+
 const logout = () => {
-  // TODO
   // Clear session and notify server
+  store.dispatch('logout');
   console.log('User logged out');
 };
 </script>
