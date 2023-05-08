@@ -4,6 +4,7 @@ export default createStore({
   state: {
     loggedIn: false,
     sessionId: '',
+    accountId: '',
     username: '',
     userType: ''
   },
@@ -13,6 +14,9 @@ export default createStore({
     },
     setSessionId(state, sessionId) {
       state.sessionId = sessionId
+    },
+    setAccountId(state, accountId) {
+      state.accountId = accountId
     },
     setUsername(state, username) {
       state.username = username
@@ -37,6 +41,7 @@ export default createStore({
       if (data.status === 'success') {
         commit('setLoggedIn', true)
         commit('setSessionId', data.sessionId)
+        commit('setAccountId', data.accountId)
         commit('setUsername', username)
         commit('setUserType', data.userType) // TODO: not compatible with backend
       }
@@ -57,6 +62,7 @@ export default createStore({
       if (data.status === 'success') {
         commit('setLoggedIn', false)
         commit('setSessionId', '')
+        commit('setAccountId', '')
         commit('setUsername', '')
         commit('setUserType', '')
       }

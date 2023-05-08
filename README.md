@@ -8,7 +8,7 @@
 
   - Backend Function: loginUser
   - Request: { "username": "string", "password": "string", "clientId": "string" }
-  - Response: { "message": "string", "status": "success"|"error", "sessionId": "string", "userType": "customer"|"clerk"|"admin"}
+  - Response: { "message": "string", "status": "success"|"error", "accountId": "string", "sessionId": "string", "userType": "customer"|"clerk"|"admin"}
 
 - POST /api/logout
   - Backend Function: logoutUser
