@@ -6,9 +6,9 @@ export function generateUUID() {
 }
 
 export function generateClientId() {
-  const userAgent = navigator.userAgent
-  const uuid = generateUUID() // The UUID function from the previous example
-  return `${userAgent}_${uuid}`
+    const uuid = generateUUID()
+    const userAgent = navigator.userAgent
+  return `${uuid}_${userAgent}`
 }
 
 export function loadClientId() {
@@ -17,4 +17,5 @@ export function loadClientId() {
     clientId = generateClientId()
     localStorage.setItem('clientId', clientId)
   }
+  return clientId
 }
