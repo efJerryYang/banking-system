@@ -12,7 +12,7 @@
 
 - POST /api/logout
   - Backend Function: logoutUser
-  - Request: { "sessionId": "string" }
+  - Request Headers: { "Authorization": "Bearer {sessionId}" }
   - Response: { "message": "string", "status": "success"|"error" }
 
 ### Account Management
@@ -23,19 +23,20 @@
   - Request: { "username": "string", "userType": "customer"|"clerk" }
   - Response: { "message": "string", "status": "success"|"error", "accountId": "string" }
 
-- POST /api/accounts/{accountId}
+- DELETE /api/accounts/{accountId}
 
   - Backend Function: deleteAccount
-  - Request: { "sessionId": "string", "accountId": "string" }
+  - Request Headers: { "Authorization": "Bearer {sessionId}" }
   - Response: { "message": "string", "status": "success"|"error" }
 
 - GET /api/accounts/{accountId}/balance
 
   - Backend Function: getAccountBalance
-  - Request: { "sessionId": "string", "accountId": "string" }
+  - Request Headers: { "Authorization": "Bearer {sessionId}" }
   - Response: { "message": "string", "status": "success"|"error", "balance": "float" }
 
-- POST /api/accounts/{sourceAccountId}/transfer
+- POST /api/accounts/transfer
   - Backend Function: transferFunds
-  - Request: { "sessionId": "string", "sourceAccountId": "string", "destAccountId": "string", "amount": "float" }
+  - Request Headers: { "Authorization": "Bearer {sessionId}" }
+  - Request: { "sourceAccountId": "string", "destAccountId": "string", "amount": "float" }
   - Response: { "message": "string", "status": "success"|"error" }
