@@ -16,18 +16,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { loadClientId } from '../utils/utils'
 
-const store = useStore();
-const username = ref('');
-const password = ref('');
+const store = useStore()
+const username = ref('')
+const password = ref('')
 
 const submitForm = async () => {
-  await store.dispatch('login', { username: username.value, password: password.value });
-  console.log('Username:', username.value);
-  console.log('Password:', password.value);
-};
+  const clientId = loadClientId()
+  console.log('Client ID:', clientId)
+  await store.dispatch('login', {
+    username: username.value,
+    password: password.value,
+    clientId: clientId
+  })
+  console.log('Username:', username.value)
+  console.log('Password:', password.value)
+}
 </script>
 
 <style scoped>

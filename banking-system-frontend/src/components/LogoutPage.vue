@@ -6,15 +6,15 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
-const store = useStore();
+const store = useStore()
 
 const logout = () => {
   // Clear session and notify server
-  store.dispatch('logout');
-  console.log('User logged out');
-};
+  store.dispatch('logout')
+  console.log('User logged out')
+}
 </script>
 
 <style scoped>

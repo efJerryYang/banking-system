@@ -22,14 +22,13 @@ export default createStore({
     }
   },
   actions: {
-    // TODO: add clientId
-    async login({ commit }, { username, password }) {
+    async login({ commit }, { username, password, clientId }) {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password, clientId })
       })
       const data = await response.json()
 
@@ -52,7 +51,7 @@ export default createStore({
         body: JSON.stringify({ sessionId })
       })
       const data = await response.json()
-      
+
       console.log('logout', data.message)
 
       if (data.status === 'success') {
