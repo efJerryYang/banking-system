@@ -43,10 +43,9 @@ async function transferFunds() {
   }
 
   const sessionId = store.state.sessionId
-  const sourceAccountId = store.state.accountId
 
   try {
-    const response = await fetch(`/api/accounts/${sourceAccountId}/transfer`, {
+    const response = await fetch(`/api/accounts/transfer`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${sessionId}`,

@@ -13,6 +13,16 @@
         />
       </div>
       <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          placeholder="Enter new password"
+          required
+        />
+      </div>
+      <div class="form-group">
         <label for="userType">User Type:</label>
         <select id="userType" v-model="userType" required>
           <option value="" disabled selected>Select user type</option>
@@ -32,6 +42,7 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const username = ref('')
+const password = ref('')
 const userType = ref('')
 const sessionId = store.state.sessionId
 
@@ -48,7 +59,11 @@ async function createAccount() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionId}`
       },
-      body: JSON.stringify({ username: username.value, userType: userType.value })
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+        userType: userType.value
+      })
     })
 
     const data = await response.json()
@@ -56,6 +71,7 @@ async function createAccount() {
     if (data.status === 'success') {
       alert('Account created successfully')
       username.value = ''
+      password.value = ''
       userType.value = ''
     } else {
       alert('Error creating account: ' + data.message)
