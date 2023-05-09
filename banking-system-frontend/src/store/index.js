@@ -54,6 +54,12 @@ export default createStore({
       if (!sessionId) {
         return { status: 'error', message: 'Not logged in' }
       }
+      commit('setLoggedIn', false)
+      commit('setSessionId', '')
+      commit('setAccountId', '')
+      commit('setUsername', '')
+      commit('setUserType', '')
+      localStorage.removeItem('sessionId')
       try {
         const response = await fetch('/api/logout', {
           method: 'GET',
@@ -66,15 +72,6 @@ export default createStore({
         const data = await response.json()
 
         console.log('logout', data.message)
-
-        if (data.status === 'success') {
-          commit('setLoggedIn', false)
-          commit('setSessionId', '')
-          commit('setAccountId', '')
-          commit('setUsername', '')
-          commit('setUserType', '')
-        }
-        localStorage.removeItem('sessionId')
         return data
       } catch (error) {
         console.log(error)

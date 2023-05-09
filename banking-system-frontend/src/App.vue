@@ -1,10 +1,27 @@
-<script setup></script>
-
 <template>
   <div id="app">
     <router-view></router-view>
   </div>
+  <div v-if="store.state.loggedIn" class="user-info">
+    <p>Welcome, {{ store.state.username }}</p>
+    <a href="#" class="logout" @click.prevent="logout">Logout</a>
+  </div>
 </template>
+
+<script setup>
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
+const store = useStore()
+const router = useRouter()
+
+const logout = async () => {
+  console.log('Logging out')
+  await store.dispatch('logout')
+  console.log('User logged out')
+  router.push('/login')
+}
+</script>
 
 <style scoped>
 header {
