@@ -43,15 +43,16 @@ export default createStore({
         commit('setSessionId', data.sessionId)
         commit('setAccountId', data.accountId)
         commit('setUsername', username)
-        commit('setUserType', data.userType) // TODO: not compatible with backend
+        commit('setUserType', data.userType)
       }
       return data
     },
-    async logout({ commit }, { sessionId }) {
+    async logout({ commit }) {
+      const sessionId = this.state.sessionId
       const response = await fetch('/api/logout', {
-        method: 'POST',
+        method: 'GET',
         headers: {
-          Authorization: `Bearer ${sessionId}`, // TODO: not compatible with backend
+          Authorization: `Bearer ${sessionId}`,
           'Content-Type': 'application/json'
         }
       })
