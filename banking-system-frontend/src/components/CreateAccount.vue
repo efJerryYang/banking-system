@@ -29,7 +29,7 @@
           <option value="" disabled selected>Select user type</option>
           <option value="customer">Customer</option>
           <option value="clerk">Clerk</option>
-          <option value="admin">Admin</option>
+          <!-- <option value="admin">Admin</option> -->
         </select>
       </div>
       <button type="submit">Create Account</button>
