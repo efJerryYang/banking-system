@@ -7,11 +7,9 @@ from django.db import models
 class User(models.Model):
     CUSTOMER = 'customer'
     CLERK = 'clerk'
-    ADMIN = 'admin'
     USER_TYPE_CHOICES = [
         (CUSTOMER, 'Customer'),
         (CLERK, 'Clerk'),
-        (ADMIN, 'Admin'),
     ]
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
