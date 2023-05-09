@@ -27,7 +27,7 @@ def login(request):
         return JsonResponse({'message': 'Invalid request method', 'status': 'error'})
 
 
-def logout(self, request):
+def logout(request):
     if request.method == 'POST':
         # 获取token
         temp = request.META.get('HTTP_AUTHORIZATION').split(' ')
@@ -46,7 +46,7 @@ def logout(self, request):
         return JsonResponse({'message': 'Invalid request method', 'status': 'error'})
 
 
-def create_account(self, request):
+def create_account(request):
     # 检查请求方法是否正确
     if request.method == 'POST':
         # 获取token
