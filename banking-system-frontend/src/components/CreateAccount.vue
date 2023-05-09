@@ -28,9 +28,12 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
+const store = useStore()
 const username = ref('')
 const userType = ref('')
+const sessionId = store.state.sessionId
 
 async function createAccount() {
   if (!username.value || !userType.value) {
@@ -42,7 +45,8 @@ async function createAccount() {
     const response = await fetch('/api/accounts', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionId}`
       },
       body: JSON.stringify({ username: username.value, userType: userType.value })
     })
