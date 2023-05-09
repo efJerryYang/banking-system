@@ -10,9 +10,9 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const logout = () => {
+const logout = async () => {
   // Clear session and notify server
-  store.dispatch('logout')
+  await store.dispatch('logout')
   console.log('User logged out')
 }
 </script>
