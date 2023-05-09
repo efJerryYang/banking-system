@@ -21,6 +21,10 @@ const logout = async () => {
   console.log('User logged out')
   router.push('/login')
 }
+
+if (localStorage.getItem('sessionId')) {
+  store.dispatch('setStoreFromLocalStorage')
+}
 </script>
 
 <style scoped>
