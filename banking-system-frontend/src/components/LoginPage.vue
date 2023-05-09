@@ -27,6 +27,10 @@ const password = ref('')
 const submitForm = async () => {
   const clientId = loadClientId()
   console.log('Client ID:', clientId)
+  if (store.state.sessionId) {
+    console.log('Already logged in')
+    return
+  }
   await store.dispatch('login', {
     username: username.value,
     password: password.value,
@@ -38,6 +42,10 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
+
+h1 {
+  color: #ccc;
+}
 .container {
   width: 100%;
   max-width: 400px;
@@ -53,6 +61,7 @@ const submitForm = async () => {
 label {
   display: block;
   margin-bottom: 5px;
+  color: #ccc;
 }
 
 .form-control {
@@ -61,7 +70,7 @@ label {
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #555;
+  color: #020202;
   background-color: #fff;
   background-image: none;
   border: 1px solid #ccc;
