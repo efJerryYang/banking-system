@@ -1,19 +1,15 @@
 <template>
   <div class="dashboard">
     <h1>The Dashboard</h1>
-    <div class="actions">
-      <router-link to="/create-account" class="action">Create Account</router-link>
-      <router-link
-        :to="userType === 'customer' ? `/delete-account/${username}` : '/delete-account'"
-        class="action"
-        >Delete Account</router-link
-      >
-      <router-link to="/account-balance" class="action">Account Balance</router-link>
-      <router-link to="/transfer-funds" class="action">Transfer Funds</router-link>
+    <div class="grid-container">
+      <div v-for="(link, index) in actionLinks" :key="index" class="grid-item">
+        <router-link :to="link.to" class="action">
+          <span>{{ link.text }}</span>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
-
 <script setup>
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
@@ -29,6 +25,16 @@ if (!store.state.sessionId) {
   router.push('/login')
 }
 
+const actionLinks = [
+  { text: 'Create Account', to: '/create-account' },
+  {
+    text: 'Delete Account',
+    to: userType === 'customer' ? `/delete-account/${username}` : '/delete-account'
+  },
+  { text: 'Account Balance', to: '/account-balance' },
+  { text: 'Transfer Funds', to: '/transfer-funds' }
+]
+
 onMounted(() => {
   // store.dispatch('getUserType')
 })
@@ -43,22 +49,39 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-.actions {
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-item {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  margin: 10px;
+  text-align: center;
+  border-radius: 4px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-item:hover {
+  background-color: #45a049;
 }
 
 .action {
-  background-color: #337ab7;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
-  padding: 10px 20px;
-  border-radius: 4px;
   text-decoration: none;
-  margin: 10px;
-}
-
-.action:hover {
-  background-color: #286090;
 }
 </style>
