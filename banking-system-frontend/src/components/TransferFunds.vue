@@ -1,6 +1,7 @@
 <template>
   <div class="transfer-funds-container">
     <h1>Transfer Funds</h1>
+    <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
     <form @submit.prevent="transferFunds">
       <div class="form-group">
         <label for="destAccountId">Destination Account ID:</label>

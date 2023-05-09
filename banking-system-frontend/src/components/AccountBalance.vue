@@ -1,6 +1,7 @@
 <template>
   <div class="account-balance-container">
     <h1>Account Balance</h1>
+    <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
     <div v-if="loading">Loading...</div>
     <div v-else>
       <p>Your current account balance is: {{ balance }}</p>

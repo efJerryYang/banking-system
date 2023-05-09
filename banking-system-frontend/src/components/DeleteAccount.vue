@@ -1,6 +1,7 @@
 <template>
   <div class="delete-account-container">
     <h1>Delete Account</h1>
+    <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
     <form @submit.prevent="deleteAccount">
       <div class="form-group">
         <label for="accountId">Account ID:</label>

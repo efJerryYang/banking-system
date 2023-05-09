@@ -6,3 +6,17 @@ h1 {
 body {
   font-family: 'Arial', sans-serif;
 }
+
+.back-to-dashboard {
+  display: inline-block;
+  margin-bottom: 1rem;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.back-to-dashboard:hover {
+  background-color: #45a049;
+}

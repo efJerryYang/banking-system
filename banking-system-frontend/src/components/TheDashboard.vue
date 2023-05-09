@@ -65,7 +65,6 @@ onMounted(() => {
   text-decoration: none;
   margin: 10px;
   text-align: center;
-  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;

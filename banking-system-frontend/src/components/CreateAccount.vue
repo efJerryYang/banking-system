@@ -1,6 +1,7 @@
 <template>
   <div class="create-account-container">
     <h1>Create Account</h1>
+    <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
     <form @submit.prevent="createAccount">
       <div class="form-group">
         <label for="username">Username:</label>
