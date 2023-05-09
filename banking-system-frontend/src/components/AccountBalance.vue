@@ -19,10 +19,9 @@ const loading = ref(true)
 
 async function fetchAccountBalance() {
   const sessionId = store.state.sessionId
-  const accountId = store.state.accountId
 
   try {
-    const response = await fetch(`/api/accounts/${accountId}/balance`, {
+    const response = await fetch(`/api/accounts/balance`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${sessionId}`,
