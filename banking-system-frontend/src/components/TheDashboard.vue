@@ -17,13 +17,20 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 const userType = store.state.userType
 const username = store.state.username
 
+// if the user is not logged in, redirect to the login page
+if (!store.state.sessionId) {
+  router.push('/login')
+}
+
 onMounted(() => {
-  store.dispatch('getUserType')
+  // store.dispatch('getUserType')
 })
 </script>
 

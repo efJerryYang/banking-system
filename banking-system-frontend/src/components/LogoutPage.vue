@@ -7,13 +7,19 @@
 
 <script setup>
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 
 const logout = async () => {
   // Clear session and notify server
+  console.log('Logging out')
+  // localStorage.removeItem('sessionId')
+  // console.log('Session ID removed from local storage')
   await store.dispatch('logout')
   console.log('User logged out')
+  router.push('/login')
 }
 </script>
 

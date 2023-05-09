@@ -1,33 +1,12 @@
-<script setup>
-// import { RouterView } from 'vue-router'
-import LoginPage from './components/LoginPage.vue'
-</script>
+<script setup></script>
 
 <template>
-  <div class="welcome-page">
-    <header>
-      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-    </header>
-    <div class="login-container">
-      <LoginPage/>
-    </div>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <style scoped>
-.welcome-page {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-image: url("@/assets/bank-full-length.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: brightness(1.2);
-}
-
 header {
   line-height: 1.5;
   width: 100%;

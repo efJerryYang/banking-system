@@ -19,8 +19,10 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { loadClientId } from '../utils/utils'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 const username = ref('')
 const password = ref('')
 
@@ -29,6 +31,7 @@ const submitForm = async () => {
   console.log('Client ID:', clientId)
   if (store.state.sessionId) {
     console.log('Already logged in')
+    router.push('/dashboard')
     return
   }
   await store.dispatch('login', {
@@ -38,14 +41,16 @@ const submitForm = async () => {
   })
   console.log('Username:', username.value)
   console.log('Password:', password.value)
+  if (store.state.sessionId) {
+    console.log('Logged in')
+    router.push('/dashboard')
+  } else {
+    console.log('Not logged in')
+  }
 }
 </script>
 
 <style scoped>
-
-h1 {
-  color: #ccc;
-}
 .container {
   width: 100%;
   max-width: 400px;
@@ -61,7 +66,6 @@ h1 {
 label {
   display: block;
   margin-bottom: 5px;
-  color: #ccc;
 }
 
 .form-control {
