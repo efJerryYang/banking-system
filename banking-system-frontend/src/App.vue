@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
-  <div v-if="store.state.loggedIn" class="user-info">
-    <p>Welcome, {{ store.state.username }}</p>
-    <a href="#" class="logout" @click.prevent="logout">Logout</a>
+    <div class="router-view-container">
+      <router-view></router-view>
+      <div v-if="store.state.loggedIn" class="user-info">
+        <p>Welcome, {{ store.state.username }}</p>
+        <a href="#" class="logout" @click.prevent="logout">Logout</a>
+      </div>
   </div>
 </template>
 
@@ -46,6 +46,15 @@ header {
   margin: 0 auto 2rem;
 }
 
+.router-view-container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -54,5 +63,33 @@ header {
   height: 100%;
   width: 100%;
   background-color: rgba(22, 21, 21, 0.6);
+}
+</style>
+
+<style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.router-view-container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  width: 50%;
+  box-sizing: border-box;
 }
 </style>
