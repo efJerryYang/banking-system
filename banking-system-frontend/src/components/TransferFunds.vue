@@ -32,10 +32,17 @@
 <script setup>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 const destAccountId = ref('')
 const amount = ref('')
+
+// if the user is not logged in, redirect to the login page
+if (!store.state.sessionId) {
+  router.push('/login')
+}
 
 async function transferFunds() {
   if (!destAccountId.value || !amount.value) {

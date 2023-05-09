@@ -1,10 +1,10 @@
 <template>
-    <div class="router-view-container">
-      <router-view></router-view>
-      <div v-if="store.state.loggedIn" class="user-info">
-        <p>Welcome, {{ store.state.username }}</p>
-        <a href="#" class="logout" @click.prevent="logout">Logout</a>
-      </div>
+  <div class="router-view-container">
+    <router-view></router-view>
+    <div v-if="store.state.loggedIn" class="user-info">
+      <p>Welcome, {{ store.state.username }}</p>
+      <a href="#" class="logout" @click.prevent="logout">Logout</a>
+    </div>
   </div>
 </template>
 

@@ -13,10 +13,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 const balance = ref(0)
 const loading = ref(true)
+// if the user is not logged in, redirect to the login page
+if (!store.state.sessionId) {
+  router.push('/login')
+}
 
 async function fetchAccountBalance() {
   const sessionId = store.state.sessionId

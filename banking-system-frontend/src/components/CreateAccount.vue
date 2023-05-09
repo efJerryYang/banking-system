@@ -40,13 +40,19 @@
 <script setup>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 const username = ref('')
 const password = ref('')
 const userType = ref('')
 const sessionId = store.state.sessionId
 
+// if the user is not logged in, redirect to the login page
+if (!store.state.sessionId) {
+  router.push('/login')
+}
 async function createAccount() {
   if (!username.value || !userType.value) {
     alert('Please enter a username and select a user type')
