@@ -53,8 +53,6 @@ async function transferFunds() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sessionId,
-        sourceAccountId,
         destAccountId: destAccountId.value,
         amount: parseFloat(amount.value)
       })
