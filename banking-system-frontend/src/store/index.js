@@ -29,10 +29,12 @@ export default createStore({
     setStoreFromLocalStorage({ commit }) {
       const sessionId = localStorage.getItem('sessionId')
       const username = localStorage.getItem('username')
-      if (sessionId && username) {
+      const userType = localStorage.getItem('userType')
+      if (sessionId && username && userType) {
         commit('setLoggedIn', true)
         commit('setSessionId', sessionId)
         commit('setUsername', username)
+        commit('setUserType', userType)
       }
     },
     async login({ commit }, { username, password, clientId }) {
@@ -55,6 +57,7 @@ export default createStore({
         commit('setUserType', data.userType)
         localStorage.setItem('sessionId', data.sessionId)
         localStorage.setItem('username', username)
+        localStorage.setItem('userType', data.userType)
       }
       return data
     },
@@ -71,6 +74,7 @@ export default createStore({
       commit('setUserType', '')
       localStorage.removeItem('sessionId')
       localStorage.removeItem('username')
+      localStorage.removeItem('userType')
       try {
         const response = await fetch('/api/logout', {
           method: 'GET',
@@ -88,6 +92,7 @@ export default createStore({
         console.log(error)
         localStorage.removeItem('sessionId')
         localStorage.removeItem('username')
+        localStorage.removeItem('userType')
         return { status: 'error', message: 'Not logged in' }
       }
     },
