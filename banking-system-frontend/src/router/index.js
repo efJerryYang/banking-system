@@ -6,7 +6,7 @@ import DeleteAccount from '@/components/DeleteAccount.vue'
 import AccountBalance from '@/components/AccountBalance.vue'
 import TransferFunds from '@/components/TransferFunds.vue'
 
-import store from '@/store'
+import LogoutHandler from '@/components/LogoutHandler.vue'
 
 const routes = [
   {
@@ -17,6 +17,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginPage
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutHandler
   },
   {
     path: '/dashboard',
@@ -48,15 +53,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
-
-router.beforeEach(async (to, from, next) => {
-  if (to.path === '/logout') {
-    await store.dispatch('logout')
-    next('/login')
-  } else {
-    next()
-  }
 })
 
 export default router
