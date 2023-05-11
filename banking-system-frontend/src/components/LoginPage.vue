@@ -34,7 +34,7 @@ const submitForm = async () => {
     router.push('/dashboard')
     return
   }
-  await store.dispatch('login', {
+  let resp_data = await store.dispatch('login', {
     username: username.value,
     password: password.value,
     clientId: clientId

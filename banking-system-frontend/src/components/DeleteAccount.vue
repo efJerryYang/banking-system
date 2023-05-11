@@ -2,16 +2,11 @@
   <div class="delete-account-container">
     <h1>Delete Account</h1>
     <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
+    <div class="message" v-if="showMessage" :class="messageType">{{ message }}</div>
     <form @submit.prevent="deleteAccount">
       <div class="form-group">
         <label for="accountId">Account ID:</label>
-        <input
-          type="text"
-          id="accountId"
-          v-model="accountId"
-          placeholder="Enter account ID to delete"
-          required
-        />
+        <input type="text" id="accountId" v-model="accountId" placeholder="Enter account ID to delete" required />
       </div>
       <button type="submit">Delete Account</button>
     </form>
@@ -27,6 +22,11 @@ const store = useStore()
 const router = useRouter()
 const accountId = ref('')
 
+const message = ref('')
+const messageType = ref('')
+const showMessage = ref(false)
+
+
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
   router.push('/login')
@@ -34,7 +34,10 @@ if (!store.state.sessionId) {
 
 async function deleteAccount() {
   if (!accountId.value) {
-    alert('Please enter the account ID to delete')
+    showMessage.value = false
+    message.value = 'Please enter the account ID to delete'
+    messageType.value = 'error'
+    showMessage.value = true
     return
   }
 
@@ -52,13 +55,19 @@ async function deleteAccount() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      alert('Account deleted successfully')
+      message.value = 'Account deleted successfully'
+      messageType.value = 'success'
+      showMessage.value = true
       accountId.value = ''
     } else {
-      alert('Error deleting account: ' + data.message)
+      message.value = 'Error deleting account: ' + data.message
+      messageType.value = 'error'
+      showMessage.value = true
     }
   } catch (error) {
-    alert('Error deleting account: ' + error.message)
+    message.value = 'Error deleting account: ' + error.message
+    messageType.value = 'error'
+    showMessage.value = true
   }
 }
 </script>
@@ -67,6 +76,22 @@ async function deleteAccount() {
 .delete-account-container {
   max-width: 500px;
   margin: 0 auto;
+}
+
+.message {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .form-group {

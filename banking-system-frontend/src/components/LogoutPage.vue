@@ -17,7 +17,7 @@ const logout = async () => {
   console.log('Logging out')
   // localStorage.removeItem('sessionId')
   // console.log('Session ID removed from local storage')
-  await store.dispatch('logout')
+  let resp_data = await store.dispatch('logout')
   console.log('User logged out')
   router.push('/login')
 }
