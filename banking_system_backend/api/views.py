@@ -1,6 +1,6 @@
 import json
 from django.http import JsonResponse
-
+from django.db import transaction
 from api.models import User, Token
 
 
@@ -15,14 +15,14 @@ def login(request):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
-            return JsonResponse({'message': 'Invalid login credentials', 'status': 'error'})
+            return JsonResponse({'message': '不存在此用户', 'status': 'error'})
         # 检查密码是否正确
         if user.check_password(password):
             token = Token.objects.get_or_create(user=user)
             return JsonResponse({'message': 'Login successful', 'status': 'success', 'accountId': user.id,
                                  'sessionId': str(token[0]), 'userType': user.userType})
         else:
-            return JsonResponse({'message': 'Invalid login credentials', 'status': 'error'})
+            return JsonResponse({'message': '密码错误', 'status': 'error'})
     else:
         return JsonResponse({'message': 'Invalid request method', 'status': 'error'})
 
@@ -131,6 +131,7 @@ def get_balance(request):
         return JsonResponse({'message': 'Invalid request method', 'status': 'error'})
 
 
+@transaction.atomic
 def transfer(request):
     # 获取转账信息
     data = json.loads(request.body)
