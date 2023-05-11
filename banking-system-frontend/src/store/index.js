@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 
-const store =  createStore({
+const store = createStore({
   state: {
     loggedIn: false,
     sessionId: localStorage.getItem('sessionId') || '',

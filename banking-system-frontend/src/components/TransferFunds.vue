@@ -26,6 +26,9 @@
       </div>
       <button type="submit">Transfer Funds</button>
     </form>
+    <div v-if="showMessage" :class="['message', messageType]">
+      {{ message }}
+    </div>
   </div>
 </template>
 
@@ -33,11 +36,14 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import useMessageHandler from '../composables/useMessageHandler'
 
 const store = useStore()
 const router = useRouter()
 const destAccountId = ref('')
 const amount = ref('')
+
+const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
 
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
@@ -45,8 +51,10 @@ if (!store.state.sessionId) {
 }
 
 async function transferFunds() {
+  clearMessage()
   if (!destAccountId.value || !amount.value) {
-    alert('Please enter a destination account ID and transfer amount')
+    // alert('Please enter a destination account ID and transfer amount')
+    displayMessage('Please enter a destination account ID and transfer amount')
     return
   }
 
@@ -68,14 +76,17 @@ async function transferFunds() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      alert('Funds transferred successfully')
+      // alert('Funds transferred successfully')
+      displayMessage('Funds transferred successfully', 'success')
       destAccountId.value = ''
       amount.value = ''
     } else {
-      alert('Error transferring funds: ' + data.message)
+      // alert('Error transferring funds: ' + data.message)
+      displayMessage('Error transferring funds: ' + data.message)
     }
   } catch (error) {
-    alert('Error transferring funds: ' + error.message)
+    // alert('Error transferring funds: ' + error.message)
+    displayMessage('Error transferring funds: ' + error.message)
   }
 }
 </script>
@@ -84,6 +95,22 @@ async function transferFunds() {
 .transfer-funds-container {
   max-width: 500px;
   margin: 0 auto;
+}
+
+.message {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .form-group {
