@@ -18,6 +18,7 @@ import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
+// import { getCurrentInstance } from 'vue'
 
 const store = useStore()
 const router = useRouter()
@@ -46,6 +47,7 @@ async function fetchAccountBalance() {
     const data = await response.json()
 
     if (data.status === 'success') {
+      // $toast.success('Please enter the account ID to delete')
       displayMessage('Account balance fetched successfully', 'success')
       balance.value = data.balance
     } else {
@@ -58,8 +60,12 @@ async function fetchAccountBalance() {
   loading.value = false
 }
 
+// let $toast
+
 onMounted(() => {
   fetchAccountBalance()
+  // const instance = getCurrentInstance()
+  // $toast = instance.appContext.config.globalProperties.$toast
 })
 </script>
 
