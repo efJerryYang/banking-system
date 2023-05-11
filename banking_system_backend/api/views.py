@@ -157,9 +157,14 @@ def transfer(request):
         return JsonResponse({'message': 'Insufficient balance', 'status': 'error'})
     # 查看目标账户是否存在
     try:
-        dest_user = User.objects.get(pk=destAccountId)
+        if destAccountId == current_user.id:
+            return JsonResponse({'message': 'Cannot transfer to yourself', 'status': 'error'})
+        if destAccountId.isdigit():
+            dest_user = User.objects.get(pk=destAccountId)
+        else:
+            return JsonResponse({'message': 'Dest account is illegal,it should be a digit', 'status': 'error'})
     except User.DoesNotExist:
-        return JsonResponse({'message': 'Destination account does not exist', 'status': 'error'})
+        return JsonResponse({'message': 'Dest account does not exist', 'status': 'error'})
     current_user.balance -= amount
     dest_user.balance += amount
     current_user.save()
