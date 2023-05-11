@@ -26,14 +26,16 @@ if (!store.state.sessionId) {
 }
 
 const actionLinks = [
-  { text: 'Create Account', to: '/create-account' },
-  {
-    text: 'Delete Account',
-    to: userType === 'customer' ? `/delete-account/${username}` : '/delete-account'
-  },
+  userType === 'clerk' ? { text: 'Create Account', to: '/create-account' } : null,
+  userType === 'clerk'
+    ? {
+        text: 'Delete Account',
+        to: userType === 'customer' ? `/delete-account/${username}` : '/delete-account'
+      }
+    : null,
   { text: 'Account Balance', to: '/account-balance' },
   { text: 'Transfer Funds', to: '/transfer-funds' }
-]
+].filter((link) => link !== null)
 
 onMounted(() => {
   // store.dispatch('getUserType')
