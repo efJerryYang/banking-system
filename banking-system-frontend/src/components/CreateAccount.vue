@@ -2,7 +2,10 @@
   <div class="create-account-container">
     <h1>Create Account</h1>
     <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
-    <div class="message" v-if="showMessage" :class="messageType">{{ message }}</div>
+    <div v-if="showMessage" :class="['message', messageType]">
+      {{ message }}
+    </div>
+
     <form @submit.prevent="createAccount">
       <div class="form-group">
         <label for="username">Username:</label>

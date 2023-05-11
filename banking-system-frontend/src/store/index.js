@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 
-export default createStore({
+const store =  createStore({
   state: {
     loggedIn: false,
     sessionId: localStorage.getItem('sessionId') || '',
@@ -114,3 +114,5 @@ export default createStore({
   },
   modules: {}
 })
+
+export default store

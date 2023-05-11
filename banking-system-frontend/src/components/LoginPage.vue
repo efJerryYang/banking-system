@@ -10,9 +10,11 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" v-model="password" />
       </div>
+      <div>
+        <div v-if="showMessage" :class="['message', messageType]">{{ message }}</div>
+      </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <div class="message" v-if="showMessage" :class="messageType">{{ message }}</div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { loadClientId } from '../utils/utils'
 import { useRouter } from 'vue-router'
-import { useMessageHandler } from '../composables/useMessageHandler'
+import useMessageHandler from '../composables/useMessageHandler'
 
 const store = useStore()
 const router = useRouter()
@@ -31,6 +33,7 @@ const password = ref('')
 const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
 
 const submitForm = async () => {
+  clearMessage()
   const clientId = loadClientId()
   console.log('Client ID:', clientId)
   if (store.state.sessionId) {
@@ -39,7 +42,7 @@ const submitForm = async () => {
     router.push('/dashboard')
     return
   }
-  let resp_data = await store.dispatch('login', {
+  await store.dispatch('login', {
     username: username.value,
     password: password.value,
     clientId: clientId
@@ -64,6 +67,22 @@ const submitForm = async () => {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.message {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .form-group {

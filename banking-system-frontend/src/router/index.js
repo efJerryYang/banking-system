@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '@/components/LoginPage.vue'
-import LogoutPage from '@/components/LogoutPage.vue'
 import TheDashboard from '@/components/TheDashboard.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
 import DeleteAccount from '@/components/DeleteAccount.vue'
 import AccountBalance from '@/components/AccountBalance.vue'
 import TransferFunds from '@/components/TransferFunds.vue'
+
+import store from '@/store'
 
 const routes = [
   {
@@ -16,11 +17,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginPage
-  },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: LogoutPage
   },
   {
     path: '/dashboard',
@@ -51,7 +47,16 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.path === '/logout') {
+    await store.dispatch('logout')
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router

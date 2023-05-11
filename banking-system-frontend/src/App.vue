@@ -11,7 +11,7 @@
 <script setup>
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-
+console.log('App.vue')
 const store = useStore()
 const router = useRouter()
 
