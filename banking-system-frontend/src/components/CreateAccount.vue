@@ -42,6 +42,7 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import useMessageHandler from '../composables/useMessageHandler'
 
 const store = useStore()
 const router = useRouter()
@@ -50,20 +51,16 @@ const password = ref('')
 const userType = ref('')
 const sessionId = store.state.sessionId
 
-const message = ref('')
-const messageType = ref('')
-const showMessage = ref(false)
+const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
 
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
   router.push('/login')
 }
 async function createAccount() {
-  showMessage.value = false
+  clearMessage()
   if (!username.value || !userType.value) {
-    message.value = 'Please enter a username and select a user type'
-    messageType.value = 'error'
-    showMessage.value = true
+    displayMessage('Please enter a username and select a user type')
     return
   }
 
@@ -84,21 +81,15 @@ async function createAccount() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      message.value = 'Account created successfully'
-      messageType.value = 'success'
-      showMessage.value = true
+      displayMessage('Account created successfully', 'success')
       username.value = ''
       password.value = ''
       userType.value = ''
     } else {
-      message.value = 'Error creating account: ' + data.message
-      messageType.value = 'error'
-      showMessage.value = true
+      displayMessage('Error creating account: ' + data.message)
     }
   } catch (error) {
-    message.value = 'Error creating account: ' + error.message
-    messageType.value = 'error'
-    showMessage.value = true
+    displayMessage('Error creating account: ' + error.message)
   }
 }
 </script>

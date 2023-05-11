@@ -6,7 +6,13 @@
     <form @submit.prevent="deleteAccount">
       <div class="form-group">
         <label for="accountId">Account ID:</label>
-        <input type="text" id="accountId" v-model="accountId" placeholder="Enter account ID to delete" required />
+        <input
+          type="text"
+          id="accountId"
+          v-model="accountId"
+          placeholder="Enter account ID to delete"
+          required
+        />
       </div>
       <button type="submit">Delete Account</button>
     </form>
@@ -17,15 +23,13 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import useMessageHandler from '../composables/useMessageHandler'
 
 const store = useStore()
 const router = useRouter()
 const accountId = ref('')
 
-const message = ref('')
-const messageType = ref('')
-const showMessage = ref(false)
-
+const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
 
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
@@ -33,11 +37,9 @@ if (!store.state.sessionId) {
 }
 
 async function deleteAccount() {
+  clearMessage()
   if (!accountId.value) {
-    showMessage.value = false
-    message.value = 'Please enter the account ID to delete'
-    messageType.value = 'error'
-    showMessage.value = true
+    displayMessage('Please enter the account ID to delete')
     return
   }
 
@@ -55,19 +57,13 @@ async function deleteAccount() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      message.value = 'Account deleted successfully'
-      messageType.value = 'success'
-      showMessage.value = true
+      displayMessage('Account deleted successfully', 'success')
       accountId.value = ''
     } else {
-      message.value = 'Error deleting account: ' + data.message
-      messageType.value = 'error'
-      showMessage.value = true
+      displayMessage('Error deleting account: ' + data.message)
     }
   } catch (error) {
-    message.value = 'Error deleting account: ' + error.message
-    messageType.value = 'error'
-    showMessage.value = true
+    displayMessage('Error deleting account: ' + error.message)
   }
 }
 </script>

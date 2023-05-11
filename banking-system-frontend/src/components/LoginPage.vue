@@ -12,6 +12,7 @@
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
+    <div class="message" v-if="showMessage" :class="messageType">{{ message }}</div>
   </div>
 </template>
 
@@ -20,17 +21,21 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { loadClientId } from '../utils/utils'
 import { useRouter } from 'vue-router'
+import { useMessageHandler } from '../composables/useMessageHandler'
 
 const store = useStore()
 const router = useRouter()
 const username = ref('')
 const password = ref('')
 
+const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
+
 const submitForm = async () => {
   const clientId = loadClientId()
   console.log('Client ID:', clientId)
   if (store.state.sessionId) {
     console.log('Already logged in')
+    displayMessage('Already logged in', 'error')
     router.push('/dashboard')
     return
   }
@@ -43,9 +48,11 @@ const submitForm = async () => {
   console.log('Password:', password.value)
   if (store.state.sessionId) {
     console.log('Logged in')
+    displayMessage('Logged in', 'success')
     router.push('/dashboard')
   } else {
     console.log('Not logged in')
+    displayMessage('Invalid username or password', 'error')
   }
 }
 </script>
