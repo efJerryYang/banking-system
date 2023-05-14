@@ -1,4 +1,3 @@
-<!-- AccountProfile.vue -->
 <template>
   <div>
     <ul class="nav">
@@ -14,11 +13,15 @@
       </li>
     </ul>
     <router-view></router-view>
+    <div class="transactions-section">
+      <transactions-table></transactions-table>
+    </div>
   </div>
 </template>
 
-<script setup></script>
-
+<script setup>
+import TransactionsTable from '@/components/TransactionsTable.vue'
+</script>
 <style scoped>
 .nav {
   display: flex;
@@ -49,5 +52,13 @@
   background-color: #e9ecef;
   border-radius: 5px;
   padding: 0.5rem 1rem;
+}
+
+.transactions-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+  justify-content: space-between;
+  margin-top: 2rem;
 }
 </style>
