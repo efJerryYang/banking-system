@@ -38,7 +38,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
 
-import {toast} from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
 
 const store = useStore()
 const router = useRouter()
@@ -80,8 +80,8 @@ async function transferFunds() {
     if (data.status === 'success') {
       // alert('Funds transferred successfully')
       // displayMessage('Funds transferred successfully', 'success')
-      toast.success('Funds transferred successfully',{
-        position: 'top-center',
+      toast.success('Funds transferred successfully', {
+        position: 'top-center'
       })
       destAccountId.value = ''
       amount.value = ''

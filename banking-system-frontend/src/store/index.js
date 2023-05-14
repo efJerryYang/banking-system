@@ -9,7 +9,7 @@ const store = createStore({
     userType: '',
     showLogoutNotification: false,
     showLoginNotification: false,
-    showRegisterNotification: false,
+    showRegisterNotification: false
   },
   mutations: {
     setLoggedIn(state, loggedIn) {

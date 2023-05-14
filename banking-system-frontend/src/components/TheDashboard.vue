@@ -14,7 +14,7 @@
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import {toast} from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
 
 const store = useStore()
 const router = useRouter()
@@ -41,7 +41,7 @@ const actionLinks = [
 onMounted(() => {
   // store.dispatch('getUserType')
   if (store.state.showLoginNotification) {
-    toast.info('Login successful!',{position: 'top-center'})
+    toast.info('Login successful!', { position: 'top-center' })
     store.state.showLoginNotification = false
   }
 })

@@ -25,7 +25,7 @@ import { loadClientId } from '../utils/utils'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
 
-import {toast} from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
 
 const store = useStore()
 const router = useRouter()
@@ -64,7 +64,7 @@ const submitForm = async () => {
 
 onMounted(() => {
   if (store.state.showLogoutNotification) {
-    toast.info('You have been logged out', {position:'top-center'})
+    toast.info('You have been logged out', { position: 'top-center' })
     store.state.showLogoutNotification = false
   }
 })

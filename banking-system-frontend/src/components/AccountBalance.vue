@@ -18,7 +18,7 @@ import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
-import { toast } from 'vue3-toastify';
+import { toast } from 'vue3-toastify'
 
 const store = useStore()
 const router = useRouter()
@@ -47,8 +47,8 @@ async function fetchAccountBalance() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      toast.success('Account balance fetched successfully',  {
-        position: 'top-center',
+      toast.success('Account balance fetched successfully', {
+        position: 'top-center'
       })
       balance.value = data.balance
     } else {
