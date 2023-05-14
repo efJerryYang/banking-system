@@ -6,7 +6,10 @@ const store = createStore({
     sessionId: localStorage.getItem('sessionId') || '',
     accountId: '',
     username: '',
-    userType: ''
+    userType: '',
+    showLogoutNotification: false,
+    showLoginNotification: false,
+    showRegisterNotification: false,
   },
   mutations: {
     setLoggedIn(state, loggedIn) {

@@ -7,15 +7,21 @@ import router from './router'
 import store from './store'
 
 import axios from 'axios'
+import Vue3Toasity, { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
-import VueToastify from 'vue-toastify'
-import 'vue-toastify/index.css'
 axios.defaults.baseURL = '/'
 
 const app = createApp(App)
 
 app.use(router)
 app.use(store)
-app.use(VueToastify)
+app.use(Vue3Toasity, {
+    delay: 0,
+    autoClose: 1000,
+    hideProgressBar: true,
+    transition: toast.TRANSITIONS.BOUNCE,
+    multiple: false,
+})
 
 app.mount('#app')

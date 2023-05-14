@@ -17,6 +17,7 @@ const router = useRouter()
 
 const logout = async () => {
   console.log('Logging out')
+  store.state.showLogoutNotification = true
   await store.dispatch('logout')
   console.log('User logged out')
   router.push('/login')

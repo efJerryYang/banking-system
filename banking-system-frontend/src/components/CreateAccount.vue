@@ -9,23 +9,11 @@
     <form @submit.prevent="createAccount">
       <div class="form-group">
         <label for="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          v-model="username"
-          placeholder="Enter new username"
-          required
-        />
+        <input type="text" id="username" v-model="username" placeholder="Enter new username" required />
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="Enter new password"
-          required
-        />
+        <input type="password" id="password" v-model="password" placeholder="Enter new password" required />
       </div>
       <div class="form-group">
         <label for="userType">User Type:</label>
@@ -47,6 +35,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
 
+import { toast } from 'vue3-toastify'
 const store = useStore()
 const router = useRouter()
 const username = ref('')
@@ -84,7 +73,8 @@ async function createAccount() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      displayMessage('Account created successfully', 'success')
+      toast.success('Account created successfully',  {
+      })
       username.value = ''
       password.value = ''
       userType.value = ''

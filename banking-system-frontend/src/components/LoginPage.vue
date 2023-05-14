@@ -19,11 +19,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { loadClientId } from '../utils/utils'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
+
+import {toast} from 'vue3-toastify'
 
 const store = useStore()
 const router = useRouter()
@@ -52,12 +54,20 @@ const submitForm = async () => {
   if (store.state.sessionId) {
     console.log('Logged in')
     displayMessage('Logged in', 'success')
+    store.state.showLoginNotification = true
     router.push('/dashboard')
   } else {
     console.log('Not logged in')
     displayMessage('Invalid username or password', 'error')
   }
 }
+
+onMounted(() => {
+  if (store.state.showLogoutNotification) {
+    toast.info('You have been logged out', {position:'top-center'})
+    store.state.showLogoutNotification = false
+  }
+})
 </script>
 
 <style scoped>

@@ -12,6 +12,7 @@ const store = useStore()
 
 onMounted(async () => {
     await store.dispatch('logout')
+    store.state.showLogoutNotification = true
     router.push('/login')
 })
 </script>
