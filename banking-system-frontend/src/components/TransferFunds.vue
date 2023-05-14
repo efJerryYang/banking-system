@@ -85,13 +85,26 @@ async function transferFunds() {
       })
       destAccountId.value = ''
       amount.value = ''
+
+      // refresh the account balance
+      store.state.refreshAccountBalance = true
+
+      // refresh the transactions
+      store.state.refreshTransactions = true
+      console.log('refreshTransactions', store.state.refreshTransactions)
     } else {
       // alert('Error transferring funds: ' + data.message)
-      displayMessage('Error transferring funds: ' + data.message)
+      // displayMessage('Error transferring funds: ' + data.message)
+      toast.error('Error transferring funds: ' + data.message, {
+        position: 'top-center'
+      })
     }
   } catch (error) {
     // alert('Error transferring funds: ' + error.message)
-    displayMessage('Error transferring funds: ' + error.message)
+    // displayMessage('Error transferring funds: ' + error.message)
+    toast.error('Error transferring funds: ' + error.message, {
+      position: 'top-center'
+    })
   }
 }
 </script>

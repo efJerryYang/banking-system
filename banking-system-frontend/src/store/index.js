@@ -9,7 +9,9 @@ const store = createStore({
     userType: '',
     showLogoutNotification: false,
     showLoginNotification: false,
-    showRegisterNotification: false
+    showRegisterNotification: false,
+    refreshTransactions: false,
+    refreshAccountBalance: false
   },
   mutations: {
     setLoggedIn(state, loggedIn) {
@@ -26,6 +28,21 @@ const store = createStore({
     },
     setUserType(state, userType) {
       state.userType = userType
+    },
+    setShowLogoutNotification(state, showLogoutNotification) {
+      state.showLogoutNotification = showLogoutNotification
+    },
+    setShowLoginNotification(state, showLoginNotification) {
+      state.showLoginNotification = showLoginNotification
+    },
+    setShowRegisterNotification(state, showRegisterNotification) {
+      state.showRegisterNotification = showRegisterNotification
+    },
+    setRefreshTransactions(state, refreshTransactions) {
+      state.refreshTransactions = refreshTransactions
+    },
+    setRefreshAccountBalance(state, refreshAccountBalance) {
+      state.refreshAccountBalance = refreshAccountBalance
     }
   },
   actions: {

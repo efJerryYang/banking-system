@@ -31,13 +31,14 @@
       <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+      <button @click="fetchTransactions" class="refresh-button">Refresh</button>
     </div>
   </div>
 </template>
 
 <!-- TransactionsTable.vue -->
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
@@ -50,6 +51,7 @@ const totalPages = ref(1)
 const startDate = ref('')
 const endDate = ref('')
 // const perPage = ref(10);
+const timerId = ref(null)
 
 const fetchTransactions = async () => {
   try {
@@ -105,6 +107,21 @@ const nextPage = async () => {
 
 onMounted(async () => {
   await fetchTransactions()
+
+  timerId.value = setInterval(async () => {
+    await fetchTransactions()
+  }, 10000)
+
+  watchEffect(async () => {
+    if (store.state.refreshTransactions) {
+      await fetchTransactions()
+      store.commit('setRefreshTransactions', false)
+    }
+  })
+})
+
+onUnmounted(() => {
+  clearInterval(timerId.value)
 })
 </script>
 
@@ -129,7 +146,49 @@ td {
 
 .pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:hover {
+  background-color: #45a049;
+}
+
+.pagination button[disabled] {
+  background-color: #999999;
+  cursor: not-allowed;
+}
+
+.refresh-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.refresh-button:hover {
+  background-color: #45a049;
 }
 </style>

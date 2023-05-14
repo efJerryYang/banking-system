@@ -25,7 +25,7 @@ const router = useRouter()
 const balance = ref(0)
 const loading = ref(true)
 
-const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
+const { message, messageType, showMessage, clearMessage } = useMessageHandler()
 
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
@@ -33,6 +33,7 @@ if (!store.state.sessionId) {
 }
 
 async function fetchAccountBalance() {
+  store.state.refreshAccountBalance = false
   const sessionId = store.state.sessionId
   clearMessage()
   try {
@@ -47,15 +48,21 @@ async function fetchAccountBalance() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      toast.success('Account balance fetched successfully', {
-        position: 'bottom-center'
-      })
+      // toast.success('Account balance fetched successfully', {
+      //   position: 'bottom-center'
+      // })
       balance.value = data.balance
     } else {
-      displayMessage('Error fetching account balance: ' + data.message, 'error')
+      // displayMessage('Error fetching account balance: ' + data.message, 'error')
+      toast.error('Error fetching account balance: ' + data.message, {
+        position: 'top-center'
+      })
     }
   } catch (error) {
-    displayMessage('Error fetching account balance: ' + error.message, 'error')
+    // displayMessage('Error fetching account balance: ' + error.message, 'error')
+    toast.error('Error fetching account balance: ' + error.message, {
+      position: 'top-center'
+    })
   }
 
   loading.value = false
