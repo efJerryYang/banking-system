@@ -34,8 +34,8 @@ const actionLinks = [
         to: userType === 'customer' ? `/delete-account/${username}` : '/delete-account'
       }
     : null,
-  { text: 'Account Balance', to: '/account-balance' },
-  { text: 'Transfer Funds', to: '/transfer-funds' }
+  { text: 'Account Balance', to: '/account/balance' },
+  { text: 'Transfer Funds', to: '/account/transfer' }
 ].filter((link) => link !== null)
 
 onMounted(() => {

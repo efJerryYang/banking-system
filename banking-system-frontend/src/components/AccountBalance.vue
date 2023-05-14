@@ -1,6 +1,6 @@
 <template>
   <div class="account-balance-container">
-    <h1>Account Balance</h1>
+    <!-- <h2>Account Balance</h2> -->
     <router-link to="/dashboard" class="back-to-dashboard">Back to Dashboard</router-link>
     <div v-if="loading">Loading...</div>
     <div v-else>
@@ -48,7 +48,7 @@ async function fetchAccountBalance() {
 
     if (data.status === 'success') {
       toast.success('Account balance fetched successfully', {
-        position: 'top-center'
+        position: 'bottom-center'
       })
       balance.value = data.balance
     } else {

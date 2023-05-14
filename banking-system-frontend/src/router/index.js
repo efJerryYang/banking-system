@@ -8,6 +8,8 @@ import TransferFunds from '@/components/TransferFunds.vue'
 
 import LogoutHandler from '@/components/LogoutHandler.vue'
 
+import AccountProfile from '@/components/AccountProfile.vue'
+
 const routes = [
   {
     path: '/',
@@ -39,14 +41,21 @@ const routes = [
     component: DeleteAccount
   },
   {
-    path: '/account-balance',
-    name: 'account-balance',
-    component: AccountBalance
-  },
-  {
-    path: '/transfer-funds',
-    name: 'transfer-funds',
-    component: TransferFunds
+    path: '/account',
+    name: 'account-profile',
+    component: AccountProfile,
+    children: [
+      {
+        path: '/account/balance',
+        name: 'account-balance',
+        component: AccountBalance
+      },
+      {
+        path: '/account/transfer',
+        name: 'transfer-funds',
+        component: TransferFunds
+      }
+    ]
   }
 ]
 
