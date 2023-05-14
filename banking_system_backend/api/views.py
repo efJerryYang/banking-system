@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.db import transaction
 from api.models import *
 from django.db.models import Q
-
+import uuid
 
 def register(request):
     # 检查请求方法是否正确
@@ -255,6 +255,7 @@ def get_transactions(request):
             transaction_list.append({'sender': transaction.sender.username,
                                      'receiver': transaction.receiver.username,
                                      'amount': transaction.amount,
+                                     'id': uuid.uuid4().hex,
                                      'status': transaction.status})
         return JsonResponse({'message': 'Get transactions successfully', 'status': 'success',
                              'transactions': transaction_list})

@@ -19,8 +19,8 @@
         <tbody>
           <tr v-for="transaction in filteredTransactions" :key="transaction.id">
             <td>{{ transaction.date }}</td>
-            <td>{{ transaction.from }}</td>
-            <td>{{ transaction.to }}</td>
+            <td>{{ transaction.sender }}</td>
+            <td>{{ transaction.receiver }}</td>
             <td>{{ transaction.amount }}</td>
           </tr>
         </tbody>
@@ -38,9 +38,9 @@
 <!-- TransactionsTable.vue -->
 <script setup>
 import { ref, onMounted } from 'vue'
-// import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
-// const store = useStore();
+const store = useStore()
 
 const transactions = ref([])
 const filteredTransactions = ref([])
@@ -52,14 +52,27 @@ const endDate = ref('')
 // const perPage = ref(10);
 
 const fetchTransactions = async () => {
-  const response = await this.$http.get('/api/transactions', {
-    params: { page: this.currentPage, userType: this.userType }
-  })
-  const data = response.data
-
-  transactions.value = data.transactions
-  filteredTransactions.value = data.transactions
-  totalPages.value = data.totalPages
+  try {
+    const response = await fetch('/api/accounts/transactions', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${store.state.sessionId}`,
+        'Content-Type': 'application/json'
+      }
+      // params: { page: this.currentPage, userType: this.userType }
+    })
+    console.log('Hello, fetch transactions')
+    const data = await response.json()
+    console.log(data.message)
+    if (data.status === 'success') {
+      console.log(data)
+      transactions.value = data.transactions
+      filteredTransactions.value = data.transactions
+      totalPages.value = data.totalPages
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const filterTransactions = () => {
