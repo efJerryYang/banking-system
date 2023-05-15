@@ -28,11 +28,13 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useMessageHandler from '../composables/useMessageHandler'
 
+import { toast } from 'vue3-toastify'
+
 const store = useStore()
 const router = useRouter()
 const accountId = ref('')
 
-const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
+const { message, messageType, showMessage, clearMessage } = useMessageHandler()
 
 // if the user is not logged in, redirect to the login page
 if (!store.state.sessionId) {
@@ -42,7 +44,8 @@ if (!store.state.sessionId) {
 async function deleteAccount() {
   clearMessage()
   if (!accountId.value) {
-    displayMessage('Please enter the account ID to delete')
+    // displayMessage('Please enter the account ID to delete')
+    toast.error('Please enter the account ID to delete')
     return
   }
 
@@ -60,13 +63,22 @@ async function deleteAccount() {
     const data = await response.json()
 
     if (data.status === 'success') {
-      displayMessage('Account deleted successfully', 'success')
+      // displayMessage('Account deleted successfully', 'success')
+      toast.success('Account deleted successfully', {})
       accountId.value = ''
     } else {
-      displayMessage('Error deleting account: ' + data.message)
+      // displayMessage('Error deleting account: ' + data.message)
+      toast.error('Error deleting account: ' + data.message)
     }
   } catch (error) {
-    displayMessage('Error deleting account: ' + error.message)
+    // displayMessage('Error deleting account: ' + error.message)
+    toast.error('Error deleting account: ' + error.message)
+    if (
+      error.message.toLowerCase().includes('session') &&
+      error.message.toLowerCase().includes('expired')
+    ) {
+      router.push('/logout')
+    }
   }
 }
 </script>

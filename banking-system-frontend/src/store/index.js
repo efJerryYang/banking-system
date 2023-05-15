@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
 
 const store = createStore({
   state: {
@@ -43,6 +44,16 @@ const store = createStore({
     },
     setRefreshAccountBalance(state, refreshAccountBalance) {
       state.refreshAccountBalance = refreshAccountBalance
+    },
+    sessionExpired(state) {
+      state.loggedIn = false
+      state.sessionId = ''
+      state.accountId = ''
+      state.username = ''
+      state.userType = ''
+      localStorage.removeItem('sessionId')
+      localStorage.removeItem('username')
+      localStorage.removeItem('userType')
     }
   },
   actions: {

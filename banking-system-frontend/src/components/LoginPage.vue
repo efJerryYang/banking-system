@@ -32,7 +32,7 @@ const router = useRouter()
 const username = ref('')
 const password = ref('')
 
-const { message, messageType, showMessage, displayMessage, clearMessage } = useMessageHandler()
+const { message, messageType, showMessage, clearMessage } = useMessageHandler()
 
 const submitForm = async () => {
   clearMessage()
@@ -40,25 +40,39 @@ const submitForm = async () => {
   console.log('Client ID:', clientId)
   if (store.state.sessionId) {
     console.log('Already logged in')
-    displayMessage('Already logged in', 'error')
+    toast.error('Already logged in', { position: 'top-center' })
     router.push('/dashboard')
     return
   }
-  await store.dispatch('login', {
-    username: username.value,
-    password: password.value,
-    clientId: clientId
-  })
-  console.log('Username:', username.value)
-  console.log('Password:', password.value)
-  if (store.state.sessionId) {
-    console.log('Logged in')
-    displayMessage('Logged in', 'success')
-    store.state.showLoginNotification = true
-    router.push('/dashboard')
-  } else {
-    console.log('Not logged in')
-    displayMessage('Invalid username or password', 'error')
+  try {
+    await store.dispatch('login', {
+      username: username.value,
+      password: password.value,
+      clientId: clientId
+    })
+    console.log('Username:', username.value)
+    console.log('Password:', password.value)
+    if (store.state.sessionId) {
+      console.log('Logged in')
+      // displayMessage('Logged in', 'success')
+      store.state.showLoginNotification = true
+      router.push('/dashboard')
+    } else {
+      console.log('Not logged in')
+      // displayMessage('Invalid username or password', 'error')
+      toast.error('Invalid username or password', { position: 'top-center' })
+    }
+  } catch (error) {
+    console.log('Error logging in:', error)
+    // displayMessage('Error logging in: ' + error.message, 'error')
+    toast.error('Error logging in: ' + error.message, { position: 'top-center' })
+    // if error message lower case contains 'session expired', route to logout
+    if (
+      error.message.toLowerCase().includes('session') &&
+      error.message.toLowerCase().includes('expired')
+    ) {
+      router.push('/logout')
+    }
   }
 }
 

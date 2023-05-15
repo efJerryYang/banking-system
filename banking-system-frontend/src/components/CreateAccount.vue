@@ -94,6 +94,12 @@ async function createAccount() {
     }
   } catch (error) {
     displayMessage('Error creating account: ' + error.message)
+    if (
+      error.message.toLowerCase().includes('session') &&
+      error.message.toLowerCase().includes('expired')
+    ) {
+      router.push('/logout')
+    }
   }
 }
 </script>

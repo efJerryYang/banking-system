@@ -63,6 +63,13 @@ async function fetchAccountBalance() {
     toast.error('Error fetching account balance: ' + error.message, {
       position: 'top-center'
     })
+    // if error message lower case contains 'session expired', route to logout
+    if (
+      error.message.toLowerCase().includes('session') &&
+      error.message.toLowerCase().includes('expired')
+    ) {
+      router.push('/logout')
+    }
   }
 
   loading.value = false
