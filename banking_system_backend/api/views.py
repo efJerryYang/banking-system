@@ -248,7 +248,10 @@ def get_transactions(request):
         else:
             token.update_expiration()
         # 获取当前用户的所有交易记录
-        transactions = Transaction.objects.filter(Q(sender=user) | Q(receiver=user))
+        if user.is_clerk():
+            transactions = Transaction.objects.all()
+        else:
+            transactions = Transaction.objects.filter(Q(sender=user) | Q(receiver=user))
         # 将交易记录转化为json格式
         transaction_list = []
         for transaction in transactions:
